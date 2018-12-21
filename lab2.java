@@ -1,38 +1,33 @@
+ import java.io.*;
 import javax.servlet.*;
-import java.io.*;
 import javax.servlet.http.*;
+import java.util.*;
+import java.text.DateFormat;
 public class lab2 extends HttpServlet
 {
-	public void doGet(HttpServletRequest request, HttpServletResponse response)throws
-	IOException,ServletException
-	{ response.setContentType("text/html");
-		PrintWriter out=response.getWriter();
-		out.println("<html><head>");
-		out.println("<title>Server Information</title>");
-		out.println("</head>");
-		out.println("<body bgcolor='#ffffff',text='#000000'>");
-		out.println("<h1 align=center> SERVER INFORMATTION");
-		out.println("<hr><br><center><table border=5><tr>");
-		out.println("<td><b>Request Method</b></td>");
-		out.println("<td>");
-		out.println(request.getMethod());
-		out.println("</td></tr>");
-		out.println("<tr>");
-		out.println("<td><b> URL</b></td>");
-		out.println("<td>");
-		out.println(request.getRequestURL());
-		out.println("</td></tr>");
-		out.println("<tr>");
-		out.println("<td><b>Protocol </b></td>");
-		out.println("<td>");
-		out.println(request.getProtocol());
-		out.println("</td></tr>");
-		out.println("<tr>");
-		out.println("<td><b>Remote Address<b></td>");
-		out.println("<td>");
-		out.println(request.getRemoteAddr());
-		out.println("</td></tr></table>");
-		out.println("<br><hr>");
-		out.println("</body></html>");
-	}
-}
+ public void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, java.io.IOException
+ {
+    response.setContentType("text/html");
+    java.io.PrintWriter out=response.getWriter();
+    HttpSession session= request.getSession();
+    Date creationTime= new Date(session.getCreationTime());
+    Date lastAccessed= new Date(session.getLastAccessedTime());
+    Date now= new Date();
+    DateFormat formatter=DateFormat.getDateTimeInstance(DateFormat.MEDIUM,DateFormat.MEDIUM);
+    out.println("<html>");
+     out.println("<head>");
+      out.println("<title>Displaying session creation and last accessed time</title>");
+    
+     out.println("</head>");
+    
+     out.println("<body>");
+    
+     out.println("<h2>session creation and last accessed</h2>");
+      out.println("the time and date now is:"+formatter.format(now)+"<br>");
+       out.println("the session creation time:HttpSession.getCreationTime():"+formatter.format(creationTime));
+    out.println("the last time the session was accessed:HttpSession.getLastAccessedTime():"+formatter.format(lastAccessed));
+    out.println("</body>");
+    out.println("</html>");
+    
+    }
+ }
